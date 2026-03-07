@@ -9,12 +9,16 @@ public class Student extends Person {
     public Student() {
     }
 
+    public Student(String nombre, String correo, String usuario, String password) {
+        super(nombre, correo, usuario, password);
+    }
+
     public Student(List<Enrollment> cursosInscritos) {
         this.cursosInscritos = cursosInscritos;
     }
 
-    public Student(String nombre, String correo, String usuario, List<Enrollment> cursosInscritos) {
-        super(nombre, correo, usuario);
+    public Student(String nombre, String correo, String usuario, String password, List<Enrollment> cursosInscritos) {
+        super(nombre, correo, usuario, password);
         this.cursosInscritos = cursosInscritos;
     }
 

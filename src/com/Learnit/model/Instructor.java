@@ -9,16 +9,22 @@ public class Instructor extends Person {
     public Instructor() {
     }
 
+    public Instructor(String nombre, String correo, String usuario, String password) {
+        super(nombre, correo, usuario, password);
+    }
+
     public Instructor(String especialidad, List<Course> cursosAsignados) {
         this.especialidad = especialidad;
         this.cursosAsignados = cursosAsignados;
     }
 
-    public Instructor(String nombre, String correo, String usuario, String especialidad, List<Course> cursosAsignados) {
-        super(nombre, correo, usuario);
+    public Instructor(String nombre, String correo, String usuario, String password, String especialidad, List<Course> cursosAsignados) {
+        super(nombre, correo, usuario, password);
         this.especialidad = especialidad;
         this.cursosAsignados = cursosAsignados;
     }
+
+
 
     public String getEspecialidad() {
         return especialidad;
