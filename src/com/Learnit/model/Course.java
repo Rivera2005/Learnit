@@ -1,6 +1,7 @@
 package com.Learnit.model;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class Course {
     private String codigoCurso;
@@ -9,9 +10,25 @@ public class Course {
     private Double duracion;
     private String materia;
     private Instructor instructor;
-    private List<Student> estudiantesInscritos;
+    private List<Student> estudiantesInscritos = new ArrayList<>();
 
     public Course() {
+    }
+    public Course(String codigoCurso, String nombre, String descripcion, Double duracion, String materia) {
+        this.codigoCurso = codigoCurso;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.duracion = duracion;
+        this.materia = materia;
+    }
+
+    public Course(String codigoCurso, String nombre, String descripcion, Double duracion, String materia, Instructor instructor) {
+        this.codigoCurso = codigoCurso;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.duracion = duracion;
+        this.materia = materia;
+        this.instructor = instructor;
     }
 
     public Course(String codigoCurso, String nombre, String descripcion, Double duracion, String materia, Instructor instructor, List<Student> estudiantesInscritos) {
@@ -80,6 +97,18 @@ public class Course {
 
     public void setEstudiantesInscritos(List<Student> estudiantesInscritos) {
         this.estudiantesInscritos = estudiantesInscritos;
+    }
+
+    @Override
+    public String toString() {
+        return "=== CURSO ===" +
+                "\nCódigo: " + codigoCurso +
+                "\nNombre: " + nombre +
+                "\nDescripción: " + descripcion +
+                "\nDuración: " + duracion +
+                "\nMateria: " + materia +
+                "\nInstructor: " + (instructor != null ? instructor.getNombre() : "Sin asignar") +
+                "\nEstudiantes inscritos: " + estudiantesInscritos.size();
     }
 }
 

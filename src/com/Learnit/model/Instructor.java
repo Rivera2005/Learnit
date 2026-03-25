@@ -1,10 +1,11 @@
 package com.Learnit.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Instructor extends Person {
     private String especialidad;
-    private List<Course> cursosAsignados;
+    private List<Course> cursosAsignados = new ArrayList<>();
 
     public Instructor() {
     }
@@ -24,6 +25,14 @@ public class Instructor extends Person {
         this.cursosAsignados = cursosAsignados;
     }
 
+    @Override
+    public String toString() {
+        return "=== INSTRUCTOR ===" +
+                "\nNombre: " + nombre +
+                "\nCorreo: " + correo +
+                "\nUsuario: " + usuario +
+                "\nCursos asignados: " + (cursosAsignados != null ? cursosAsignados.size() : 0);
+    }
 
 
     public String getEspecialidad() {

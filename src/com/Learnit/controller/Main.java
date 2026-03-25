@@ -1,10 +1,13 @@
 package com.Learnit.controller;
 
+import com.Learnit.model.Course;
 import com.Learnit.model.Instructor;
 import com.Learnit.model.Person;
 import com.Learnit.model.Student;
 import com.Learnit.service.LoginService;
 import com.Learnit.service.PersonService;
+import com.Learnit.service.CourseService;
+import com.Learnit.service.EnrollmentService;
 import java.util.Scanner;
 
 public class Main {
@@ -12,6 +15,9 @@ public class Main {
     public static void main(String[] args){
 
         PersonService personService = new PersonService();
+        CourseService courseService = new CourseService();
+        EnrollmentService enrollmentService = new EnrollmentService();
+
 
         // Crear usuarios
         usuariosIniciales(personService);
@@ -69,7 +75,7 @@ public class Main {
                     switch (opcion) {
 
                         case 1:
-                            System.out.println("----- Registrar estudiante -----");
+                            System.out.println("----- Registrar Estudiante -----");
                             registerStudent(personService, teclado);
                             break;
 
@@ -79,11 +85,13 @@ public class Main {
                             break;
 
                         case 3:
-                            System.out.println("Registrar curso");
+                            System.out.println("----- Registrar Curso -----");
+                            registerCourse(courseService, teclado, personService);
                             break;
 
                         case 4:
                             System.out.println("Inscribir estudiante");
+                            enrollStudent(enrollmentService, courseService, personService, teclado);
                             break;
 
                         case 5:
@@ -207,6 +215,68 @@ public class Main {
         String userInstructor = teclado.nextLine();
         personService.registerInstructor(nameInstructor, emailInstructor, userInstructor, userInstructor);
         // Se le pasa 2 veces userStudent para dejar que la contraseña sea igual al usuario;
+    }
+    public static void registerCourse(CourseService courseService, Scanner teclado, PersonService personService){
+        System.out.println("Ingrese el código del curso: ");
+        String codigo = teclado.nextLine();
+        System.out.println("Ingrese el nombre del curso: ");
+        String nombre = teclado.nextLine();
+        System.out.println("Ingrese la descripción del curso: ");
+        String descripcion = teclado.nextLine();
+        System.out.println("Ingrese la duración del curso en horas: ");
+        Double duracion = Double.parseDouble(teclado.nextLine());
+        System.out.println("Ingrese la materia a la que pertenece el curso: ");
+        String materia = teclado.nextLine();
+        System.out.println("Ingrese el usuario del instructor del curso: ");
+        String usuario = teclado.nextLine();
+        Instructor instructor = null;
+        for (Person p : personService.getPersons()) {
+            if (p instanceof Instructor && p.getUsuario().equals(usuario)) {
+                instructor = (Instructor) p;
+                break;
+            }
+        }
+        if (instructor == null) {
+            System.out.println("Instructor no encontrado");
+            return;
+        }
+        courseService.registerCourse(codigo, nombre, descripcion, duracion, materia, instructor);
+
+    }
+    public static void enrollStudent(EnrollmentService enrollmentService, CourseService courseService, PersonService personService, Scanner teclado){
+        System.out.print("Ingrese el codigo del curso: ");
+        String codigoCurso = teclado.nextLine();
+        Course curso = null;
+        for (Course c : courseService.getCourses()) {
+            if (c.getCodigoCurso().equals(codigoCurso)) {
+                curso = c;
+                break;
+            }
+        }
+        if (curso == null) {
+            System.out.println("Curso no encontrado");
+            return;
+        }
+        System.out.print("Ingrese el usuario del estudiante: ");
+        String usuario = teclado.nextLine();
+        Student estudiante = null;
+        for (Person p : personService.getPersons()) {
+            System.out.println(p.getUsuario());
+            if (p instanceof Student && p.getUsuario().equals(usuario)) {
+                estudiante = (Student) p;
+                break;
+            }
+        }
+        if (estudiante == null) {
+            System.out.println("Estudiante no encontrado");
+            return;
+        }
+
+        // esto lo guarda supuestamente en curso
+        curso.getEstudiantesInscritos().add(estudiante);
+        // y este en enrollment
+        System.out.println(curso.toString());
+        enrollmentService.enrollStudent(estudiante, curso);
     }
 
 }
