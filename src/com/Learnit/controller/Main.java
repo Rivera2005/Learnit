@@ -150,6 +150,7 @@ public class Main {
 
                         case 1:
                             System.out.println("Registrar avance de estudiante");
+                            actualizarProgreso(enrollmentService, teclado);
                             break;
 
                         case 2:
