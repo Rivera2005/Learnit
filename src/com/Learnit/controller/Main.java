@@ -278,5 +278,14 @@ public class Main {
         System.out.println(curso.toString());
         enrollmentService.enrollStudent(estudiante, curso);
     }
+    public static void actualizarProgreso(EnrollmentService enrollmentService, Scanner teclado) {
+        System.out.print("Ingrese el usuario del estudiante: ");
+        String usuarioEstudiante = teclado.nextLine();
+        System.out.print("Ingrese el código del curso: ");
+        String codigoCurso = teclado.nextLine();
+        System.out.print("Ingrese el nuevo progreso (0 - 100): ");
+        Double nuevoProgreso = Double.parseDouble(teclado.nextLine());
+        enrollmentService.actualizarProgresos(usuarioEstudiante, codigoCurso, nuevoProgreso);
+    }
 
 }
