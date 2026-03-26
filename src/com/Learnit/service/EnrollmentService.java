@@ -23,6 +23,21 @@ public class EnrollmentService {
             boolean mismoEstudiante = enrollment.getEstudiante().getUsuario().equals(usuariosEstudiante);
             boolean mismoCuros = enrollment.getCurso().getCodigoCurso().equals(codigoCurse);
 
+            if (mismoEstudiante && mismoCuros){
+                Double progeroAnterior = enrollment.getProgreso();
+                enrollment.setProgreso(nuevoProgreso);
+                System.out.println("Progreso actualozadp correctamente :)");
+                System.out.println("Estudiante ; " + enrollment.getEstudiante().getNombre());
+                System.out.println("Curso : " + enrollment.getCurso().getNombre());
+                System.out.println("Progreso : " + progeroAnterior + "% -> " + nuevoProgreso + "%");
+                if (nuevoProgreso >= 100){
+                    System.out.println("Muy bien " + enrollment.getEstudiante().getNombre() + "ha completado todo el curso ;))");
+                }
+                return;
+            }
+        }
+        System.out.println("No se encontro inscripción para el estudiante " + usuariosEstudiante + " en el curso " + codigoCurse +".");
+    }
 
     public ArrayList<Enrollment> getEnrollments() {
         return enrollments;
