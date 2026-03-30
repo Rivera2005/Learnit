@@ -8,6 +8,7 @@ import com.Learnit.service.LoginService;
 import com.Learnit.service.PersonService;
 import com.Learnit.service.CourseService;
 import com.Learnit.service.EnrollmentService;
+import com.Learnit.service.ReportService;
 import java.util.Scanner;
 
 public class Main {
@@ -17,7 +18,7 @@ public class Main {
         PersonService personService = new PersonService();
         CourseService courseService = new CourseService();
         EnrollmentService enrollmentService = new EnrollmentService();
-
+        ReportService reportService = new ReportService(enrollmentService, courseService);
 
         // Crear usuarios
         usuariosIniciales(personService);
@@ -96,6 +97,7 @@ public class Main {
 
                         case 5:
                             System.out.println("Ver reporte");
+                            reportService.reporteAdmin();
                             break;
 
                         case 6:
@@ -123,6 +125,7 @@ public class Main {
 
                         case 1:
                             System.out.println("Ver cursos inscritos");
+                            reportService.reporteEstudiante((Student) responseLogin);
                             break;
 
                         case 2:
@@ -237,13 +240,14 @@ public class Main {
                 break;
             }
         }
+
         if (instructor == null) {
             System.out.println("Instructor no encontrado");
             return;
         }
         courseService.registerCourse(codigo, nombre, descripcion, duracion, materia, instructor);
-
     }
+
     public static void enrollStudent(EnrollmentService enrollmentService, CourseService courseService, PersonService personService, Scanner teclado){
         System.out.print("Ingrese el codigo del curso: ");
         String codigoCurso = teclado.nextLine();
@@ -288,5 +292,4 @@ public class Main {
         Double nuevoProgreso = Double.parseDouble(teclado.nextLine());
         enrollmentService.actualizarProgresos(usuarioEstudiante, codigoCurso, nuevoProgreso);
     }
-
 }
