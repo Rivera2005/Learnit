@@ -3,44 +3,66 @@ package com.Learnit.service;
 import com.Learnit.model.*;
 
 import java.util.ArrayList;
+import java.util.EventObject;
 
 public class EnrollmentService {
 
     private ArrayList<Enrollment> enrollments = new ArrayList<>();
-    private int contador = 1;
 
-    public void enrollStudent(Student estudiante, Course curso){
-        Enrollment enrollment = new Enrollment(contador++, estudiante, curso, 0.0);
-        enrollments.add(enrollment);
-        System.out.println("Inscripción realizada correctamente :)");
-    }
-    public void actualizarProgresos( String usuariosEstudiante, String codigoCurse,Double nuevoProgreso){
-        if (nuevoProgreso < 0 || nuevoProgreso > 100){
-            System.out.println("Error: el progreso debe ser un valor entre 0 y 100,");
-            return;
-        }
-        for (Enrollment enrollment : enrollments){
-            boolean mismoEstudiante = enrollment.getEstudiante().getUsuario().equals(usuariosEstudiante);
-            boolean mismoCuros = enrollment.getCurso().getCodigoCurso().equals(codigoCurse);
-
-            if (mismoEstudiante && mismoCuros){
-                Double progeroAnterior = enrollment.getProgreso();
-                enrollment.setProgreso(nuevoProgreso);
-                System.out.println("Progreso actualozadp correctamente :)");
-                System.out.println("Estudiante ; " + enrollment.getEstudiante().getNombre());
-                System.out.println("Curso : " + enrollment.getCurso().getNombre());
-                System.out.println("Progreso : " + progeroAnterior + "% -> " + nuevoProgreso + "%");
-                if (nuevoProgreso >= 100){
-                    System.out.println("Muy bien " + enrollment.getEstudiante().getNombre() + "ha completado todo el curso ;))");
-                }
-                return;
+    public boolean yaEstaInscrito(Student student, Course course){
+        for (Enrollment e: enrollments){
+            if(e.getEstudiante().equals(student) && e.getCurso().equals(course)){
+                return true;
             }
         }
-        System.out.println("No se encontro inscripción para el estudiante " + usuariosEstudiante + " en el curso " + codigoCurse +".");
+        return false;
     }
+
+    private int contador = 1;
+
+    public Enrollment enrollStudent(Student estudiante, Course curso){
+        if (yaEstaInscrito(estudiante, curso)){
+            return null;
+        }
+        if (estudiante == null || curso == null) return null;
+        Enrollment enrollment = new Enrollment(contador++, estudiante, curso, 0.0);
+        enrollments.add(enrollment);
+        return enrollment;
+    }
+
+    public Enrollment actualizarProgresos( String usuariosEstudiante, String codigoCurse,Double nuevoProgreso){
+        if (usuariosEstudiante == null || codigoCurse == null || nuevoProgreso == null) return null;
+
+        if (nuevoProgreso < 0 || nuevoProgreso > 100){
+            return null;
+        }
+
+        Enrollment enrollment = buscarInscripcion(usuariosEstudiante, codigoCurse);
+
+        if (enrollment != null){
+            enrollment.setProgreso(nuevoProgreso);
+        }
+
+        return enrollment;
+    }
+
+    public Enrollment buscarInscripcion(String usuario, String codigoCurso){
+        for (Enrollment e : enrollments){
+            boolean mismoEstudiante = e.getEstudiante().getUsuario().equals(usuario);
+            boolean mismoCurso = e.getCurso().getCodigoCurso().equals(codigoCurso);
+
+            if (mismoEstudiante && mismoCurso){
+                return e;
+            }
+        }
+        return null;
+    }
+
 
     public ArrayList<Enrollment> getEnrollments() {
         return enrollments;
     }
+
+
 }
 

@@ -10,10 +10,10 @@ public class Course {
     private Double duracion;
     private String materia;
     private Instructor instructor;
-    private List<Student> estudiantesInscritos = new ArrayList<>();
 
     public Course() {
     }
+
     public Course(String codigoCurso, String nombre, String descripcion, Double duracion, String materia) {
         this.codigoCurso = codigoCurso;
         this.nombre = nombre;
@@ -31,15 +31,8 @@ public class Course {
         this.instructor = instructor;
     }
 
-    public Course(String codigoCurso, String nombre, String descripcion, Double duracion, String materia, Instructor instructor, List<Student> estudiantesInscritos) {
-        this.codigoCurso = codigoCurso;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.duracion = duracion;
-        this.materia = materia;
-        this.instructor = instructor;
-        this.estudiantesInscritos = estudiantesInscritos;
-    }
+
+
 
     // Getters y Setter
 
@@ -91,13 +84,6 @@ public class Course {
         this.instructor = instructor;
     }
 
-    public List<Student> getEstudiantesInscritos() {
-        return estudiantesInscritos;
-    }
-
-    public void setEstudiantesInscritos(List<Student> estudiantesInscritos) {
-        this.estudiantesInscritos = estudiantesInscritos;
-    }
 
     @Override
     public String toString() {
@@ -107,8 +93,7 @@ public class Course {
                 "\nDescripción: " + descripcion +
                 "\nDuración: " + duracion +
                 "\nMateria: " + materia +
-                "\nInstructor: " + (instructor != null ? instructor.getNombre() : "Sin asignar") +
-                "\nEstudiantes inscritos: " + estudiantesInscritos.size();
+                "\nInstructor: " + (instructor != null ? instructor.getNombre() : "Sin asignar");
     }
 }
 

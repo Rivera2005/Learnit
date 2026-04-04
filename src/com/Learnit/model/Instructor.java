@@ -25,13 +25,15 @@ public class Instructor extends Person {
         this.cursosAsignados = cursosAsignados;
     }
 
+
     @Override
     public String toString() {
-        return "=== INSTRUCTOR ===" +
-                "\nNombre: " + nombre +
-                "\nCorreo: " + correo +
-                "\nUsuario: " + usuario +
-                "\nCursos asignados: " + (cursosAsignados != null ? cursosAsignados.size() : 0);
+        return "===== Instructor Registrado =====\n" +
+                "Nombre: " + getNombre() + "\n" +
+                "Correo: " + getCorreo() + "\n" +
+                "Usuario: " + getUsuario() + "\n" +
+                "Cursos asignados: " + (cursosAsignados != null ? cursosAsignados.size() : 0) + "\n" +
+                "=================================";
     }
 
 

@@ -12,20 +12,30 @@ public class CourseService {
 
     private ArrayList<Course> courses = new ArrayList<>();
 
-    /*public void registerCourse(String codigo, String nombre, String descripcion, Double duracion, String materia){
-        Course course = new Course(codigo, nombre, descripcion, duracion, materia);
-        courses.add(course);
-        //instructor.getCursosAsignados().add(course);
-        System.out.println("Curso registrado correctamente :)");
-    }*/
-    public void registerCourse(String codigo, String nombre, String descripcion, Double duracion, String materia, Instructor instructor){
+    public Course registerCourse(String codigo, String nombre, String descripcion, Double duracion, String materia, Instructor instructor){
+        if (buscarPorCodigo(codigo) != null){
+            return null;
+        }
+
+        if (nombre == null || nombre.trim().isEmpty()) return null;
+
+        if (descripcion == null || descripcion.trim().isEmpty()) return null;
+
+        if (duracion <= 0) return null;
+
         Course course = new Course(codigo, nombre, descripcion, duracion, materia, instructor);
         courses.add(course);
         instructor.getCursosAsignados().add(course);
-        System.out.println("Curso registrado correctamente :)");
-        System.out.println(course.toString());
-        System.out.println("------------------");
-        System.out.println(instructor.toString());
+        return course;
+    }
+
+    public Course buscarPorCodigo(String codigo){
+        for (Course c: courses){
+            if (c.getCodigoCurso().equals(codigo)){
+                return c;
+            }
+        }
+        return null;
     }
 
 

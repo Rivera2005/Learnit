@@ -47,4 +47,14 @@ public class Enrollment {
     public void setProgreso(Double progreso) {
         this.progreso = progreso;
     }
+
+    @Override
+    public String toString() {
+        return "===== INSCRIPCIÓN =====\n" +
+                "Estudiante: " + estudiante.getNombre() + "\n" +
+                "Curso: " + curso.getNombre() + "\n" +
+                "Código: " + curso.getCodigoCurso() + "\n" +
+                "Progreso: " + progreso + "%\n" +
+                "========================";
+    }
 }
